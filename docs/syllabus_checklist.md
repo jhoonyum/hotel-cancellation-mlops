@@ -10,7 +10,7 @@ Status key: **done** = in the repository and checked; **partial** = started, see
 |---|---|---|
 | Python 3.12 or higher | done | `.python-version` 3.12; CI runs 3.12; all code was run on Python 3.12.3 |
 | Team project; group size announced in class | open | Team roster not recorded yet (README, "Team and contributions") |
-| Topic selection and proposal (up to 300 words) due end of week 4 | open | Past the date. The syllabus says topics are approved first-come, first-served to prevent project replication: confirm with the instructor that this dataset and topic are approved for this group |
+| Topic selection and proposal (up to 300 words) due end of week 4 | done | Topic approved by the instructor (reported by Hoon, 2026-11-02) |
 | Final presentation in week 10, 10 minutes, every member states their own engineering contribution | todo | Contributions table in the README must be filled in |
 | Clearly outline which member did which part | todo | Same table |
 | Disclose AI tools used (product and version) | done | README, "AI assistance" |
@@ -63,8 +63,7 @@ Status key: **done** = in the repository and checked; **partial** = started, see
 
 ## 5. Open decisions
 
-1. Confirm topic approval with the instructor (section 1).
-2. Agree the prediction time and the feature set (`docs/eda_findings.md`, section 8, points 1 to 3).
-3. Agree the cost ratio behind the decision threshold.
-4. Record the team roster and each member's part.
-5. Decide repository visibility for submission.
+1. Agree the prediction time and the feature set (`docs/eda_findings.md`, section 8, points 1 to 3).
+2. Agree the cost ratio behind the decision threshold.
+3. Record the team roster and each member's part.
+4. Decide repository visibility for submission.
