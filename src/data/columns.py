@@ -56,6 +56,12 @@ TIMING_RISK = ["country", "required_car_parking_spaces"]
 # check-in or cancellation; assigned room can differ from reserved for hotel reasons.
 POST_BOOKING = ["assigned_room_type", "booking_changes"]
 
+# Columns outside the proposal list that the feature-set ablation adds back.
+EXTRA_NUMERIC = ["booking_changes"]
+EXTRA_CATEGORICAL = ["assigned_room_type", "reserved_room_type"]
+NUMERIC_ALL = NUMERIC + EXTRA_NUMERIC
+CATEGORICAL_ALL = CATEGORICAL + EXTRA_CATEGORICAL
+
 # The feature list used in the earlier project proposal.
 PROPOSAL = NUMERIC + CATEGORICAL
 
@@ -69,4 +75,7 @@ FEATURE_SETS = {
     + ["assigned_room_type", "booking_changes", "reserved_room_type"],
     "strict + country": STRICT + ["country"],
     "strict + parking": STRICT + ["required_car_parking_spaces"],
+    # Columns kept in STRICT whose timing is also unclear: how much do they carry?
+    "strict - deposit type": [c for c in STRICT if c != "deposit_type"],
+    "strict - special requests": [c for c in STRICT if c != "total_of_special_requests"],
 }
