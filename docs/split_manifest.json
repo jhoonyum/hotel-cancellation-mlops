@@ -1,0 +1,28 @@
+{
+  "raw": {
+    "path": "data/raw/hotels.csv",
+    "rows": 119390,
+    "sha256": "7c2ae42a7353905ea136e5c2287f17c92c5435826598bfbb8491c6f0c7b1fc06"
+  },
+  "train": {
+    "path": "data/processed/train.csv",
+    "rows": 78703,
+    "first_arrival": "2015-07-01",
+    "last_arrival": "2016-12-31",
+    "sha256": "a212c1698005f98ed6da5c16154b61b70a09ed8995d0e8c596e76ce82c89c4f9"
+  },
+  "val": {
+    "path": "data/processed/val.csv",
+    "rows": 12828,
+    "first_arrival": "2017-01-01",
+    "last_arrival": "2017-03-31",
+    "sha256": "03f893a46ee0b67d043e7a735018c24aa45c6af7778d071a97fbdf3fcf39ee99"
+  },
+  "test": {
+    "path": "data/holdout/test.csv",
+    "rows": 27859,
+    "first_arrival": "2017-04-01",
+    "last_arrival": "2017-08-31",
+    "sha256": "34311d34029baa39e9a9aab16819984c717a0d66208da58c4400b12f8559aab1"
+  }
+}
