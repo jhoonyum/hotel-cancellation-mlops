@@ -1,0 +1,10 @@
+# Runtime dependencies for the stages implemented so far (ingestion, splits, EDA).
+# Python >= 3.12 (course requirement, see docs/syllabus_checklist.md).
+# MLOps stack pins (Prefect, MLflow, FastAPI, ...) are added when those stages land,
+# each pinned only after it has been installed and run.
+pandas==2.3.3
+numpy==2.4.6
+scipy==1.17.1
+scikit-learn==1.9.1
+matplotlib==3.11.2
+evidently==0.7.23

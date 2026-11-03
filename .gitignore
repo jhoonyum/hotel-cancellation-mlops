@@ -1,0 +1,19 @@
+# data is downloaded/derived by scripts, never committed
+data/
+
+# python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+
+# experiment tracking / local services (later stages)
+mlruns/
+mlartifacts/
+prefect_home/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
