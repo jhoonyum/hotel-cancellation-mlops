@@ -39,7 +39,7 @@ def _write(df: pd.DataFrame, path: Path) -> dict:
     df.to_csv(path, index=False, lineterminator="\n")
     return {
         "path": str(path.relative_to(REPO_ROOT)),
-        "rows": int(len(df)),
+        "rows": len(df),
         "first_arrival": df["arrival_date"].min().strftime("%Y-%m-%d"),
         "last_arrival": df["arrival_date"].max().strftime("%Y-%m-%d"),
         "sha256": sha256_of(path),
@@ -54,7 +54,7 @@ def build(raw_path: Path = RAW_PATH) -> dict:
     assert df["_split"].notna().all() and len(df) == len(raw)
     parts = {name: g.drop(columns="_split") for name, g in df.groupby("_split")}
     return {
-        "raw": {"path": str(raw_path.relative_to(REPO_ROOT)), "rows": int(len(raw)),
+        "raw": {"path": str(raw_path.relative_to(REPO_ROOT)), "rows": len(raw),
                 "sha256": sha256_of(raw_path)},
         "train": _write(parts["train"], PROCESSED_DIR / "train.csv"),
         "val": _write(parts["val"], PROCESSED_DIR / "val.csv"),
