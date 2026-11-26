@@ -14,16 +14,16 @@ Status key: **done** = in the repository and checked; **partial** = started, see
 | Final presentation in week 10, 10 minutes, every member states their own engineering contribution | todo | Contributions table in the README must be filled in |
 | Clearly outline which member did which part | todo | Same table |
 | Disclose AI tools used (product and version) | done | README, "AI assistance" |
-| Repository "public/accessible" for the slides link | open | Repository is currently private. Make it public or give the instructor and TA access before submission |
+| Repository "public/accessible" for the slides link | done | Repository is public |
 
 ## 2. Technical project outline (five stages)
 
 | # | Requirement | Status | Evidence / note |
 |---|---|---|---|
 | 1a | Dataset with a clear target solving a specific problem | done | Hotel bookings, target `is_canceled`; `docs/eda_findings.md` |
-| 1b | Evaluation metric aligned with the problem's constraints | partial | PR-AUC proposed (no-skill 0.33), threshold from a cost ratio. The cost ratio is not agreed yet (`docs/eda_findings.md`, section 8) |
+| 1b | Evaluation metric aligned with the problem's constraints | done | PR-AUC for ranking; cost per 1,000 bookings at cost ratio r = 2 and threshold 0.667 for the decision; both baselines named (`docs/stage1_decisions.md`) |
 | 1c | Train/test split; test set isolated until production validation | done | `src/data/splits.py`, `make_splits.py`; test file in `data/holdout/`; `load_design_data` returns train and val only; split hashes in `docs/split_manifest.json`; tests in `tests/test_splits.py`. Disclosure about an earlier look at the test split: `docs/eda_findings.md`, section 0 |
-| 1 | Baselines | partial | Majority class, rule and logistic regression are scored in the EDA on validation. A formal baseline module with tracked runs comes with stage 2 |
+| 1 | Baselines | partial | Majority class, Non Refund rule and logistic regression are scored on validation; the rule's cost at r = 2 is the bar a champion must clear (`docs/stage1_decisions.md`, section 6). Tracked baseline runs come with stage 2 |
 | 2a | Automated orchestrator for preprocessing and training | todo | Planned: Prefect |
 | 2b | Experiment tracking and model logging (MLflow or similar), AutoML optional | todo | Planned: MLflow |
 | 2c | Finalized model in a registry with semantic versioning | todo | Planned: MLflow Model Registry |
@@ -41,12 +41,12 @@ Status key: **done** = in the repository and checked; **partial** = started, see
 | GitHub: README explaining how to run and reproduce the whole pipeline locally | partial | README covers the stages that exist (ingestion, splits, EDA, tests) |
 | GitHub: dependency file (requirements.txt, environment.yaml or Dockerfile) | done | `requirements.txt`, `requirements-dev.txt`; Dockerfile arrives with stage 3 |
 | Slides (one per team): problem statement and EDA | partial | Material ready: `docs/eda_findings.md` and `docs/figures/` |
-| Slides: evaluation metric justification | partial | Section 7 and 8 of `docs/eda_findings.md` |
+| Slides: evaluation metric justification | partial | Material ready: `docs/stage1_decisions.md` and `fig7` |
 | Slides: system architecture diagram (training and deployment) | todo | |
 | Slides: experiment tracking dashboard showing algorithm selection | todo | |
 | Slides: deployment and monitoring demo or screenshots | todo | |
 | Slides: drift analysis, visual evidence of monitoring reacting to corrupted data | todo | `fig5` shows the clean-data baseline only |
-| Slides: visible link to the repository | open | See visibility note above |
+| Slides: visible link to the repository | todo | Repository is public; add the link to the slides |
 
 ## 4. Grading list (each item 5 points)
 
@@ -63,7 +63,7 @@ Status key: **done** = in the repository and checked; **partial** = started, see
 
 ## 5. Open decisions
 
-1. Agree the prediction time and the feature set (`docs/eda_findings.md`, section 8, points 1 to 3).
-2. Agree the cost ratio behind the decision threshold.
+1. ~~Agree the prediction time and the feature set.~~ Decided 2026-11-25 (`docs/stage1_decisions.md`).
+2. ~~Agree the cost ratio behind the decision threshold.~~ Decided 2026-11-25: r = 2, threshold 0.667.
 3. Record the team roster and each member's part.
-4. Decide repository visibility for submission.
+4. ~~Decide repository visibility for submission.~~ The repository is public.

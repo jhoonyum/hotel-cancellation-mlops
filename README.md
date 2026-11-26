@@ -21,6 +21,11 @@ from two Portuguese hotels, arrivals 2015-07-01 to 2017-08-31. Target: `is_cance
 
 Requirement-by-requirement status against the syllabus: [`docs/syllabus_checklist.md`](docs/syllabus_checklist.md).
 
+Stage 1 decisions for training, in [`docs/stage1_decisions.md`](docs/stage1_decisions.md): score active
+bookings before arrival, `STRICT` features (19 columns, `deposit_type` kept), false-positive cost twice a
+false negative, decision threshold 0.667. A champion model must cost less than the rule "flag every
+Non Refund booking" at that ratio; the untuned model does not clearly do so yet.
+
 Main EDA results (details and caveats in the findings document):
 
 - Cancellation rate 35.8% on train + validation; non-refundable bookings are canceled 99.2% of the time.
@@ -42,6 +47,7 @@ python -m src.ingestion.download        # data/raw/hotels.csv, verified against 
 python -m src.data.make_splits          # train / val / holdout test by arrival date
 python -m src.data.make_splits --check  # recompute and compare with docs/split_manifest.json
 python -m src.eda.run_eda               # docs/eda_results.json and docs/figures/ (about 45 s)
+python -m src.eda.decision_analysis     # docs/decision_results.json and fig7 (about 15 s)
 pytest -q && ruff check .
 ```
 
@@ -57,6 +63,7 @@ src/data/        columns.py           column groups and feature sets
                  splits.py            time-based split, design-data loader (train + val only)
                  make_splits.py       writes the split files and docs/split_manifest.json
 src/eda/         run_eda.py           EDA, drift check, exploratory baselines, figures
+                 decision_analysis.py cost ratio and threshold evidence for the stage 1 decisions
 tests/                                pytest suite
 docs/                                 findings, checklist, split manifest, figures
 .github/workflows/ci.yml              ruff and pytest on Python 3.12

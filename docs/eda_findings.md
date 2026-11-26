@@ -169,6 +169,10 @@ Reading:
 
 ## 8. Proposed decisions for the pipeline (to confirm with the team)
 
+> **Update 2026-11-25:** points 1 to 3 and the cost ratio in point 7 are decided in
+> [`stage1_decisions.md`](stage1_decisions.md): score active bookings before arrival, `STRICT` features
+> with `deposit_type` kept, cost ratio r = 2, threshold 0.667.
+
 1. **Fix the prediction time first.** Write down when the model is called ("at booking", or "N days before
    arrival") and keep only columns known at that moment. Everything below depends on it.
 2. **Default feature set = strict.** Report the proposal list only as an optimistic ablation. Never use the
@@ -204,6 +208,7 @@ Reading:
 
 ```bash
 python -m src.ingestion.download && python -m src.data.make_splits && python -m src.eda.run_eda
+python -m src.eda.decision_analysis   # cost-ratio and threshold evidence for docs/stage1_decisions.md
 ```
 
 Runtime about 45 seconds on a laptop. Figure colors come from a color-vision-deficiency-checked palette
