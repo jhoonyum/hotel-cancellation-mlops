@@ -21,10 +21,13 @@ bookings alike (Antonio, de Almeida, Nunes 2019, *Data in Brief*). A booking can
 therefore described by its state on that day, after the cancellation.
 
 The model is meant to score bookings that are still active, before arrival. For that to be fair, a feature
-must hold the same value at scoring time as in the snapshot. Fields set when the booking is made (lead time,
-dates, stay length, party size, hotel, meal, segment, channel, customer type, guest history) meet this.
-Fields that can change after booking, or after a cancellation, do not, and are removed where the evidence
-shows a problem (section 2).
+must hold the same value at scoring time as in the snapshot. Hotel, segment, channel, customer type and
+guest history are set when the booking is made. Arrival date, stay length, party size and meal can be
+amended later: the dataset paper counts exactly these amendments in `booking_changes`, and 14.9% of design
+bookings have at least one. The snapshot shows the amended values, so for those bookings the model trains
+on values it might not have seen at scoring time. We keep these fields, because without them nothing about
+the stay is left, and list the issue under limitations. Fields whose timing the data shows to be a problem
+are removed (section 2).
 
 ## 2. Feature set: `STRICT` without `deposit_type`
 
@@ -66,8 +69,8 @@ Cost of the choice: PR-AUC on validation falls from 0.7825 to 0.7328. The model 
 so much of the signal survives without the column.
 
 Special requests stay in, with a caveat: they can be added after booking, and canceled bookings may stop
-receiving them. Removing them costs about 0.02 PR-AUC (`eda_findings.md`, section 7). Listed under
-limitations.
+receiving them. Removing them cost about 0.02 PR-AUC in the EDA ablation, measured with `deposit_type`
+still in the set (`eda_findings.md`, section 7). Listed under limitations.
 
 ## 3. Cost ratio r = 2
 
@@ -89,11 +92,12 @@ With perfectly calibrated probabilities, flagging pays off above r / (1 + r), wh
 exploratory model is not calibrated well enough for that:
 
 - Brier score 0.157; mean prediction 0.313 against an observed rate of 0.334.
-- Middle deciles under-predict (decile 6: 0.255 predicted, 0.359 observed). Decile 9, where the threshold
-  sits, over-predicts (0.653 predicted, 0.581 observed).
-- Isotonic calibration does not fix it. Fitting the model on train before October 2016 and the calibration
-  on October to December 2016 made validation cost at 0.667 worse (269.9 against 264.0 per 1,000 bookings)
-  and lowered PR-AUC (0.700 against 0.729). The calibration months differ from the validation months.
+- Middle deciles under-predict (decile 6: 0.255 predicted, 0.359 observed). Decile 9, the range around
+  0.667, over-predicts (0.653 predicted, 0.581 observed).
+- One attempt at isotonic calibration did not fix it. Fitting the model on train before October 2016 and
+  the calibration on October to December 2016 made validation cost at 0.667 worse (269.9 against 264.0 per
+  1,000 bookings) and lowered PR-AUC (0.700 against 0.729). A likely reason is that the calibration months
+  behave differently from the validation months; we did not test other calibration windows or methods.
 
 So the threshold is **chosen on validation**: the value that minimizes cost at r = 2. For the exploratory
 model that is **0.77**, and it is stable: 0.73 to 0.78 across bootstrap resamples (5th to 95th percentile).
@@ -141,8 +145,9 @@ column would add if it were safe, not targets to chase.
   full, so the true false-positive cost is probably lower. At r = 1 the model saves about 100 rooms per
   1,000 bookings instead of about 70.
 - **Cost is per booking**, not weighted by revenue. Long or expensive stays matter more in reality.
-- **The day-before-arrival snapshot** affects every field that can change after booking. Special requests
-  and ADR are kept but could differ between scoring time and the snapshot for canceled bookings.
+- **The day-before-arrival snapshot** affects every field that can change after booking. Arrival date,
+  stay length, party size, meal (amended in 14.9% of bookings), special requests and ADR are kept but
+  could differ between scoring time and the snapshot.
 - **Validation covers January to March 2017 only.** Cancellation rates vary by month (`eda_findings.md`,
   section 3), and the test months (April to August) are not in validation, so precision and recall at the
   chosen threshold will move. The production check on the test split will show by how much.
