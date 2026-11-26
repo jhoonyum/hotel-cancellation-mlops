@@ -4,6 +4,7 @@ from src.data.columns import (
     CALENDAR,
     CATEGORICAL,
     CATEGORICAL_ALL,
+    DEFAULT_FEATURES,
     FEATURE_SETS,
     NUMERIC,
     NUMERIC_ALL,
@@ -34,6 +35,13 @@ def test_no_feature_set_contains_target_or_outcome_columns(name):
 def test_strict_set_excludes_timing_risk_columns_and_year():
     assert not set(TIMING_RISK) & set(STRICT)
     assert "arrival_date_year" not in STRICT
+
+
+def test_default_features_are_strict_without_deposit_type():
+    assert "deposit_type" not in DEFAULT_FEATURES
+    assert set(DEFAULT_FEATURES) == set(STRICT) - {"deposit_type"}
+    assert len(DEFAULT_FEATURES) == 18
+    assert set(DEFAULT_FEATURES) == set(FEATURE_SETS["strict - deposit type"])
 
 
 def test_calendar_columns_exist_in_the_proposal_lists():

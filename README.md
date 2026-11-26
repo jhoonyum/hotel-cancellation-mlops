@@ -22,9 +22,9 @@ from two Portuguese hotels, arrivals 2015-07-01 to 2017-08-31. Target: `is_cance
 Requirement-by-requirement status against the syllabus: [`docs/syllabus_checklist.md`](docs/syllabus_checklist.md).
 
 Stage 1 decisions for training, in [`docs/stage1_decisions.md`](docs/stage1_decisions.md): score active
-bookings before arrival, `STRICT` features (19 columns, `deposit_type` kept), false-positive cost twice a
-false negative, decision threshold 0.667. A champion model must cost less than the rule "flag every
-Non Refund booking" at that ratio; the untuned model does not clearly do so yet.
+bookings before arrival, `DEFAULT_FEATURES` (`STRICT` without `deposit_type`, 18 columns),
+false-positive cost twice a false negative, decision threshold chosen on validation (0.77 for the untuned
+model, which cuts the cost of doing nothing by 23%).
 
 Main EDA results (details and caveats in the findings document):
 

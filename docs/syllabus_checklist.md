@@ -21,9 +21,9 @@ Status key: **done** = in the repository and checked; **partial** = started, see
 | # | Requirement | Status | Evidence / note |
 |---|---|---|---|
 | 1a | Dataset with a clear target solving a specific problem | done | Hotel bookings, target `is_canceled`; `docs/eda_findings.md` |
-| 1b | Evaluation metric aligned with the problem's constraints | done | PR-AUC for ranking; cost per 1,000 bookings at cost ratio r = 2 and threshold 0.667 for the decision; both baselines named (`docs/stage1_decisions.md`) |
+| 1b | Evaluation metric aligned with the problem's constraints | done | PR-AUC for ranking; cost per 1,000 bookings at cost ratio r = 2 for the decision, threshold chosen on validation (`docs/stage1_decisions.md`) |
 | 1c | Train/test split; test set isolated until production validation | done | `src/data/splits.py`, `make_splits.py`; test file in `data/holdout/`; `load_design_data` returns train and val only; split hashes in `docs/split_manifest.json`; tests in `tests/test_splits.py`. Disclosure about an earlier look at the test split: `docs/eda_findings.md`, section 0 |
-| 1 | Baselines | partial | Majority class, Non Refund rule and logistic regression are scored on validation; the rule's cost at r = 2 is the bar a champion must clear (`docs/stage1_decisions.md`, section 6). Tracked baseline runs come with stage 2 |
+| 1 | Baselines | partial | Majority class, Non Refund rule and logistic regression are scored on validation; the untuned model on the default features (cost 255.5 per 1,000 at r = 2) is the baseline a champion must beat (`docs/stage1_decisions.md`, section 6). Tracked baseline runs come with stage 2 |
 | 2a | Automated orchestrator for preprocessing and training | todo | Planned: Prefect |
 | 2b | Experiment tracking and model logging (MLflow or similar), AutoML optional | todo | Planned: MLflow |
 | 2c | Finalized model in a registry with semantic versioning | todo | Planned: MLflow Model Registry |
@@ -64,6 +64,6 @@ Status key: **done** = in the repository and checked; **partial** = started, see
 ## 5. Open decisions
 
 1. ~~Agree the prediction time and the feature set.~~ Decided 2026-11-25 (`docs/stage1_decisions.md`).
-2. ~~Agree the cost ratio behind the decision threshold.~~ Decided 2026-11-25: r = 2, threshold 0.667.
+2. ~~Agree the cost ratio behind the decision threshold.~~ Decided 2026-11-25: r = 2, threshold chosen on validation.
 3. Record the team roster and each member's part.
 4. ~~Decide repository visibility for submission.~~ The repository is public.

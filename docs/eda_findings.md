@@ -101,7 +101,7 @@ Check-Out 58,771 are all kept), so `reservation_status` and `reservation_status_
 | `country` = PRT | 55.1% (40,340) | 20.7% (50,723) | nationality is often unknown until check-in | Out of the default set; 468 rows with missing country excluded from this comparison |
 | `assigned_room_type` differs from reserved | 5.0% (13,154) | 40.9% (78,377) | can change for hotel operational reasons | Out (defined at or after check-in) |
 | `booking_changes` > 0 | 14.6% (13,643) | 39.5% (77,888) | counted until check-in or cancellation | Out |
-| `deposit_type` = Non Refund | 99.2% (11,768) | 26.4% (79,763) | computed from payments recorded before arrival or cancellation | **In, but flagged** (see section 7: the model loses the most without it) |
+| `deposit_type` = Non Refund | 99.2% (11,768) | 26.4% (79,763) | computed from payments recorded before arrival or cancellation | Out of the default since 2026-11-25 (`stage1_decisions.md`, section 2); kept as an ablation. Section 7: the model loses the most without it |
 | `total_of_special_requests` > 0 | 19.1% (35,180) | 46.2% (56,351) | nothing on timing | **In, but flagged**: requests can be added after booking |
 
 ## 6. Drift on clean data
@@ -171,7 +171,8 @@ Reading:
 
 > **Update 2026-11-25:** points 1 to 3 and the cost ratio in point 7 are decided in
 > [`stage1_decisions.md`](stage1_decisions.md): score active bookings before arrival, `STRICT` features
-> with `deposit_type` kept, cost ratio r = 2, threshold 0.667.
+> without `deposit_type` (its meaning and timing cannot be checked), cost ratio r = 2, threshold chosen on
+> validation (0.77 for the untuned model).
 
 1. **Fix the prediction time first.** Write down when the model is called ("at booking", or "N days before
    arrival") and keep only columns known at that moment. Everything below depends on it.

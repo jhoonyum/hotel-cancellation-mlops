@@ -68,6 +68,11 @@ PROPOSAL = NUMERIC + CATEGORICAL
 # Proposed default: proposal list without the timing-risk columns and without the year.
 STRICT = [c for c in PROPOSAL if c not in TIMING_RISK and c != "arrival_date_year"]
 
+# Default for training (docs/stage1_decisions.md): STRICT without deposit_type. The column comes from
+# payments recorded at an unknown time between booking and arrival (or cancellation), and its 99%
+# cancellation rate is unexplained in this data, so it is kept only as an ablation.
+DEFAULT_FEATURES = [c for c in STRICT if c != "deposit_type"]
+
 FEATURE_SETS = {
     "proposal": PROPOSAL,
     "strict": STRICT,
