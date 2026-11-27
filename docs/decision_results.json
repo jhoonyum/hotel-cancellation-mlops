@@ -1,0 +1,405 @@
+{
+  "scope": "train + validation only; the test split is never loaded",
+  "model": "HistGradientBoostingClassifier, defaults, DEFAULT_FEATURES (18 columns)",
+  "features": [
+    "lead_time",
+    "arrival_date_week_number",
+    "arrival_date_day_of_month",
+    "stays_in_weekend_nights",
+    "stays_in_week_nights",
+    "adults",
+    "children",
+    "babies",
+    "is_repeated_guest",
+    "previous_cancellations",
+    "adr",
+    "total_of_special_requests",
+    "hotel",
+    "arrival_date_month",
+    "meal",
+    "market_segment",
+    "distribution_channel",
+    "customer_type"
+  ],
+  "validation_rows": 12828,
+  "validation_pr_auc": 0.7328,
+  "validation_pr_auc_ablation_with_deposit_type": 0.7825,
+  "cost_unit": "one empty room (false negative = 1, false positive = r)",
+  "primary_ratio": 2.0,
+  "by_ratio": {
+    "1.0": {
+      "theoretical_threshold": 0.5,
+      "cost_minimizing_threshold": 0.52,
+      "bootstrap_threshold_p5_p50_p95": [
+        0.52,
+        0.52,
+        0.58
+      ],
+      "at_theoretical_threshold": {
+        "flagged_share": 0.2196,
+        "precision": 0.7263,
+        "recall": 0.4779,
+        "cost_per_1000": 234.3,
+        "tp": 2046,
+        "fp": 771,
+        "fn": 2235,
+        "tn": 7776
+      },
+      "at_cost_minimizing_threshold": {
+        "flagged_share": 0.2102,
+        "precision": 0.7433,
+        "recall": 0.4681,
+        "cost_per_1000": 231.4,
+        "tp": 2004,
+        "fp": 692,
+        "fn": 2277,
+        "tn": 7855
+      },
+      "flag_nothing": {
+        "flagged_share": 0.0,
+        "precision": null,
+        "recall": 0.0,
+        "cost_per_1000": 333.7,
+        "tp": 0,
+        "fp": 0,
+        "fn": 4281,
+        "tn": 8547
+      },
+      "saving_vs_flag_nothing_per_1000": {
+        "at_theoretical_threshold": {
+          "point": 99.4,
+          "ci95": [
+            92.4,
+            107.5
+          ]
+        },
+        "at_cost_minimizing_threshold": {
+          "point": 102.3,
+          "ci95": [
+            95.3,
+            110.0
+          ]
+        }
+      },
+      "ablation_with_deposit_type": {
+        "flagged_share": 0.2296,
+        "precision": 0.7895,
+        "recall": 0.5431,
+        "cost_per_1000": 200.8,
+        "tp": 2325,
+        "fp": 620,
+        "fn": 1956,
+        "tn": 7927
+      },
+      "reference_rule_non_refund": {
+        "flagged_share": 0.1019,
+        "precision": 0.9946,
+        "recall": 0.3037,
+        "cost_per_1000": 232.9,
+        "tp": 1300,
+        "fp": 7,
+        "fn": 2981,
+        "tn": 8540
+      }
+    },
+    "2.0": {
+      "theoretical_threshold": 0.6667,
+      "cost_minimizing_threshold": 0.77,
+      "bootstrap_threshold_p5_p50_p95": [
+        0.73,
+        0.77,
+        0.78
+      ],
+      "at_theoretical_threshold": {
+        "flagged_share": 0.1439,
+        "precision": 0.8267,
+        "recall": 0.3565,
+        "cost_per_1000": 264.7,
+        "tp": 1526,
+        "fp": 320,
+        "fn": 2755,
+        "tn": 8227
+      },
+      "at_cost_minimizing_threshold": {
+        "flagged_share": 0.0992,
+        "precision": 0.9293,
+        "recall": 0.2763,
+        "cost_per_1000": 255.5,
+        "tp": 1183,
+        "fp": 90,
+        "fn": 3098,
+        "tn": 8457
+      },
+      "flag_nothing": {
+        "flagged_share": 0.0,
+        "precision": null,
+        "recall": 0.0,
+        "cost_per_1000": 333.7,
+        "tp": 0,
+        "fp": 0,
+        "fn": 4281,
+        "tn": 8547
+      },
+      "saving_vs_flag_nothing_per_1000": {
+        "at_theoretical_threshold": {
+          "point": 69.1,
+          "ci95": [
+            62.0,
+            76.7
+          ]
+        },
+        "at_cost_minimizing_threshold": {
+          "point": 78.2,
+          "ci95": [
+            72.6,
+            83.8
+          ]
+        }
+      },
+      "ablation_with_deposit_type": {
+        "flagged_share": 0.1592,
+        "precision": 0.8854,
+        "recall": 0.4223,
+        "cost_per_1000": 229.3,
+        "tp": 1808,
+        "fp": 234,
+        "fn": 2473,
+        "tn": 8313
+      },
+      "reference_rule_non_refund": {
+        "flagged_share": 0.1019,
+        "precision": 0.9946,
+        "recall": 0.3037,
+        "cost_per_1000": 233.5,
+        "tp": 1300,
+        "fp": 7,
+        "fn": 2981,
+        "tn": 8540
+      }
+    },
+    "3.0": {
+      "theoretical_threshold": 0.75,
+      "cost_minimizing_threshold": 0.78,
+      "bootstrap_threshold_p5_p50_p95": [
+        0.77,
+        0.78,
+        0.89
+      ],
+      "at_theoretical_threshold": {
+        "flagged_share": 0.1049,
+        "precision": 0.9108,
+        "recall": 0.2864,
+        "cost_per_1000": 266.2,
+        "tp": 1226,
+        "fp": 120,
+        "fn": 3055,
+        "tn": 8427
+      },
+      "at_cost_minimizing_threshold": {
+        "flagged_share": 0.0967,
+        "precision": 0.9347,
+        "recall": 0.2707,
+        "cost_per_1000": 262.3,
+        "tp": 1159,
+        "fp": 81,
+        "fn": 3122,
+        "tn": 8466
+      },
+      "flag_nothing": {
+        "flagged_share": 0.0,
+        "precision": null,
+        "recall": 0.0,
+        "cost_per_1000": 333.7,
+        "tp": 0,
+        "fp": 0,
+        "fn": 4281,
+        "tn": 8547
+      },
+      "saving_vs_flag_nothing_per_1000": {
+        "at_theoretical_threshold": {
+          "point": 67.5,
+          "ci95": [
+            60.8,
+            73.9
+          ]
+        },
+        "at_cost_minimizing_threshold": {
+          "point": 71.4,
+          "ci95": [
+            64.9,
+            77.6
+          ]
+        }
+      },
+      "ablation_with_deposit_type": {
+        "flagged_share": 0.1238,
+        "precision": 0.9509,
+        "recall": 0.3527,
+        "cost_per_1000": 234.3,
+        "tp": 1510,
+        "fp": 78,
+        "fn": 2771,
+        "tn": 8469
+      },
+      "reference_rule_non_refund": {
+        "flagged_share": 0.1019,
+        "precision": 0.9946,
+        "recall": 0.3037,
+        "cost_per_1000": 234.0,
+        "tp": 1300,
+        "fp": 7,
+        "fn": 2981,
+        "tn": 8540
+      }
+    }
+  },
+  "calibration": {
+    "brier": 0.1565,
+    "mean_predicted": 0.3129,
+    "observed_rate": 0.3337,
+    "deciles": [
+      {
+        "decile": 1,
+        "mean_predicted": 0.0336,
+        "observed_rate": 0.0234,
+        "n": 1283
+      },
+      {
+        "decile": 2,
+        "mean_predicted": 0.0651,
+        "observed_rate": 0.0631,
+        "n": 1283
+      },
+      {
+        "decile": 3,
+        "mean_predicted": 0.104,
+        "observed_rate": 0.106,
+        "n": 1283
+      },
+      {
+        "decile": 4,
+        "mean_predicted": 0.154,
+        "observed_rate": 0.1872,
+        "n": 1282
+      },
+      {
+        "decile": 5,
+        "mean_predicted": 0.2052,
+        "observed_rate": 0.2572,
+        "n": 1283
+      },
+      {
+        "decile": 6,
+        "mean_predicted": 0.2551,
+        "observed_rate": 0.3585,
+        "n": 1283
+      },
+      {
+        "decile": 7,
+        "mean_predicted": 0.3094,
+        "observed_rate": 0.373,
+        "n": 1276
+      },
+      {
+        "decile": 8,
+        "mean_predicted": 0.4317,
+        "observed_rate": 0.4593,
+        "n": 1278
+      },
+      {
+        "decile": 9,
+        "mean_predicted": 0.653,
+        "observed_rate": 0.5811,
+        "n": 1294
+      },
+      {
+        "decile": 10,
+        "mean_predicted": 0.9149,
+        "observed_rate": 0.9267,
+        "n": 1283
+      }
+    ]
+  },
+  "calibration_experiment": {
+    "fit_rows": 64186,
+    "calibration_rows": 14517,
+    "calibration_start": "2016-10-01",
+    "uncalibrated": {
+      "pr_auc": 0.7288,
+      "brier": 0.1575,
+      "cost_at_theoretical_threshold": 264.0,
+      "cost_minimizing_threshold": 0.74,
+      "cost_at_cost_minimizing_threshold": 262.3
+    },
+    "isotonic": {
+      "pr_auc": 0.7002,
+      "brier": 0.1653,
+      "cost_at_theoretical_threshold": 269.9,
+      "cost_minimizing_threshold": 0.85,
+      "cost_at_cost_minimizing_threshold": 263.6
+    }
+  },
+  "non_refund_profile_train_and_validation": {
+    "rows": 11768,
+    "cancel_rate": 0.9922,
+    "share_country_PRT": 0.9661,
+    "share_market_segment": {
+      "Groups": 0.6239,
+      "Offline TA/TO": 0.3498,
+      "Corporate": 0.0209,
+      "Online TA": 0.0043
+    },
+    "share_exact_duplicate_rows": 0.933,
+    "median_lead_time": 211.0,
+    "median_lead_time_other_deposit_types": 47.0,
+    "canceled_median_days_before_arrival": 93.0,
+    "canceled_median_days_before_arrival_other": 27.0
+  },
+  "non_refund_rows_flagged_without_deposit_type": {
+    "threshold": 0.77,
+    "non_refund_rows": 1307,
+    "flagged": 905
+  },
+  "by_month_at_primary_threshold": {
+    "January": {
+      "n": 3681,
+      "cancel_rate": 0.3396,
+      "flagged_share": 0.1068,
+      "precision": 0.9491,
+      "recall": 0.2984,
+      "cost_per_1000": 249.1,
+      "tp": 373,
+      "fp": 20,
+      "fn": 877,
+      "tn": 2411
+    },
+    "February": {
+      "n": 4177,
+      "cancel_rate": 0.3254,
+      "flagged_share": 0.0836,
+      "precision": 0.9484,
+      "recall": 0.2436,
+      "cost_per_1000": 254.7,
+      "tp": 331,
+      "fp": 18,
+      "fn": 1028,
+      "tn": 2800
+    },
+    "March": {
+      "n": 4970,
+      "cancel_rate": 0.3364,
+      "flagged_share": 0.1068,
+      "precision": 0.9021,
+      "recall": 0.2865,
+      "cost_per_1000": 261.0,
+      "tp": 479,
+      "fp": 52,
+      "fn": 1193,
+      "tn": 3246
+    }
+  },
+  "bootstrap": {
+    "resamples": 300,
+    "seed": 0
+  }
+}
