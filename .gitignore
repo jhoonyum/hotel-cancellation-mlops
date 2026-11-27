@@ -10,6 +10,7 @@ __pycache__/
 
 # experiment tracking / local services (later stages)
 mlruns/
+mlflow.db
 mlartifacts/
 prefect_home/
 
