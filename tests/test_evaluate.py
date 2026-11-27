@@ -1,6 +1,6 @@
 import numpy as np
 
-from src.eda.decision_analysis import best_threshold, confusion, cost, summary
+from src.training.evaluate import best_threshold, confusion, cost, summary
 
 Y = np.array([1, 1, 1, 0, 0, 0, 0, 0])
 P = np.array([0.95, 0.80, 0.30, 0.70, 0.20, 0.10, 0.05, 0.02])

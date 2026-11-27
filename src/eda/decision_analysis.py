@@ -38,46 +38,17 @@ from src.eda.run_eda import (
     N_BOOT,
     ORANGE,
     SEED,
-    make_model,
     save,
     style,
 )
+from src.training.evaluate import GRID, best_threshold, cost, summary
+from src.training.models import make_model
 
 RESULTS_PATH = REPO_ROOT / "docs" / "decision_results.json"
 RATIOS = (1.0, 2.0, 3.0)  # cost of a false positive / cost of a false negative
 PRIMARY_RATIO = 2.0
-GRID = np.round(np.arange(0.05, 0.96, 0.01), 2)
 GREEN = "#1f9e74"
 CALIBRATION_START = pd.Timestamp("2016-10-01")  # last three train months hold out for calibration
-
-
-def confusion(y: np.ndarray, flag: np.ndarray) -> dict:
-    tp = int((flag & (y == 1)).sum())
-    fp = int((flag & (y == 0)).sum())
-    fn = int((~flag & (y == 1)).sum())
-    return {"tp": tp, "fp": fp, "fn": fn, "tn": int(len(y) - tp - fp - fn)}
-
-
-def cost(y: np.ndarray, flag: np.ndarray, r: float) -> float:
-    c = confusion(y, flag)
-    return c["fn"] + r * c["fp"]
-
-
-def summary(y: np.ndarray, flag: np.ndarray, r: float) -> dict:
-    c = confusion(y, flag)
-    n_flag = c["tp"] + c["fp"]
-    return {
-        "flagged_share": round(n_flag / len(y), 4),
-        "precision": round(c["tp"] / n_flag, 4) if n_flag else None,
-        "recall": round(c["tp"] / (c["tp"] + c["fn"]), 4),
-        "cost_per_1000": round(1000 * cost(y, flag, r) / len(y), 1),
-        **c,
-    }
-
-
-def best_threshold(y: np.ndarray, p: np.ndarray, r: float) -> float:
-    costs = [cost(y, p >= t, r) for t in GRID]
-    return float(GRID[int(np.argmin(costs))])
 
 
 def calibration(y: np.ndarray, p: np.ndarray) -> dict:
