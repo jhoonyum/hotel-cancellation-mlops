@@ -1,6 +1,6 @@
 import numpy as np
 
-from src.training.evaluate import best_threshold, confusion, cost, summary
+from src.training.evaluate import best_threshold, confusion, cost, evaluate, summary
 
 Y = np.array([1, 1, 1, 0, 0, 0, 0, 0])
 P = np.array([0.95, 0.80, 0.30, 0.70, 0.20, 0.10, 0.05, 0.02])
@@ -33,3 +33,13 @@ def test_summary_handles_no_flags():
     assert s["precision"] is None
     assert s["recall"] == 0.0
     assert s["cost_per_1000"] == 375.0
+
+
+def test_evaluate_reports_every_logged_metric():
+    m = evaluate(Y, P, 2.0)
+    assert set(m) == {
+        "pr_auc", "roc_auc", "brier", "threshold", "cost_per_1000", "precision", "recall",
+        "flagged_share", "cost_per_1000_flag_nothing",
+    }
+    assert m["threshold"] == best_threshold(Y, P, 2.0)
+    assert m["cost_per_1000"] <= m["cost_per_1000_flag_nothing"]
