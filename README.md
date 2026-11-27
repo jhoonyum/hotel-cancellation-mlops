@@ -15,7 +15,8 @@ from two Portuguese hotels, arrivals 2015-07-01 to 2017-08-31. Target: `is_cance
 |---|---|
 | Data ingestion (verified download) and time-based split with an isolated test set | done |
 | EDA (train and validation only), column timing audit, clean-data drift check | done, see [`docs/eda_findings.md`](docs/eda_findings.md) |
-| Orchestration, experiment tracking, model registry | not started |
+| Experiment tracking (MLflow): baseline runs on validation | in progress, see Quickstart |
+| Orchestration, model registry | not started |
 | Containerized API | not started |
 | Monitoring and drift simulation | not started |
 
@@ -48,6 +49,8 @@ python -m src.data.make_splits          # train / val / holdout test by arrival 
 python -m src.data.make_splits --check  # recompute and compare with docs/split_manifest.json
 python -m src.eda.run_eda               # docs/eda_results.json and docs/figures/ (about 45 s)
 python -m src.eda.decision_analysis     # docs/decision_results.json and fig7 (about 15 s)
+python -m src.training.train           # baselines, one MLflow run each (mlflow.db, mlruns/)
+mlflow ui --backend-store-uri sqlite:///mlflow.db  # compare runs at http://127.0.0.1:5000
 pytest -q && ruff check .
 ```
 
@@ -64,12 +67,15 @@ src/data/        columns.py           column groups and feature sets
                  make_splits.py       writes the split files and docs/split_manifest.json
 src/eda/         run_eda.py           EDA, drift check, exploratory baselines, figures
                  decision_analysis.py cost ratio and threshold evidence for the stage 1 decisions
+src/training/    models.py            model recipes: one sklearn Pipeline (preprocessing + model)
+                 evaluate.py          cost at r = 2, cost-minimizing threshold, validation metrics
+                 train.py             trains the baselines and logs each run to MLflow
 tests/                                pytest suite
 docs/                                 findings, checklist, split manifest, figures
 .github/workflows/ci.yml              ruff and pytest on Python 3.12
 ```
 
-Planned (added as the stages land): `flows/` (orchestration), `src/training`, `src/serving`,
+Planned (added as the stages land): `flows/` (orchestration), `src/serving`,
 `src/monitoring`, `docker/`, `scripts/` (drift simulation).
 
 ## Team and contributions
